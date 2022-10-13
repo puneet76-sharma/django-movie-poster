@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+    .success{
+        color:red;
+    }
+    </style>
+</head>
+<body>
+    <h1>We are in Profile</h1>
+
+    {% if obj %}
+    <h1>List of Users</h1>
+        {% for i in obj %}
+          <p>
+          <a href="{% url 'user_details' i.id %}">{{i}}</a>
+          </p> 
+        {% endfor %}
+    {% endif %}
+
+    <h1>hi {{name}},</h1>
+
+   {% if form.non_field_errors %}
+        {% for i in  form.non_field_errors %}
+
+             <p>{{i}}</p>
+
+        {% endfor %}       
+    {% endif %}
+
+
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+    
+    {% for i in form %}
+    
+        {{i.label_tag}}{{i}}{{i.errors|striptags}} <br> <br>
+    
+    {% endfor %}
+    
+    <input type="submit" value="Save">
+    
+    </form>
+{% if messages %}
+    {% for message in messages %}
+        <small {% if message.tags %} class="{{message.tags}}"{% endif %} > {{message}}</small>
+       
+    {% endfor %}
+{% endif %}
+<br>
+<a href="{% url 'logout' %}">Logout</a> <br>
+<br>
+<a href="{% url 'index' %}">Home Page</a> <br>
+
+
+</body>
+</html>
